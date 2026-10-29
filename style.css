@@ -1,0 +1,123 @@
+/* User-selected pale warm brown theme; light appearance is intentional.
+   Preserve redesign. DESIGN_VARIANCE: 6; MOTION_INTENSITY: 3; VISUAL_DENSITY: 3.
+   Native CSS bento aesthetic. Glass is a web approximation, not an Apple package.
+   Radii: content tiles 20px, navigation 20px, navigation links 12px.
+   Layer order: decorative cookie 0, glass surface 1, skip link 2. */
+:root {
+  color-scheme: light;
+  --page: #f6eee4;
+  --surface: #fffaf3;
+  --soft: #efdfca;
+  --ink: #3b2a21;
+  --muted: #6b5140;
+  --line: #dfc9ae;
+  --accent: #80512e;
+  --glass-fill: rgb(255 250 243 / .88);
+  --glass-border: rgb(255 250 243 / .94);
+  --glass-light: rgb(255 250 243 / .80);
+  --glass-shade: rgb(104 72 46 / .10);
+  --nav-hover: rgb(128 81 46 / .08);
+  --shadow: 0 2px 10px rgb(92 61 38 / .04);
+  --lift-shadow: 0 12px 28px rgb(92 61 38 / .08);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  line-height: 1.75;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.skip-link { position: fixed; top: 12px; left: 12px; z-index: 2; padding: 10px 18px; background: var(--surface); border-radius: 12px; transform: translateY(-180%); }
+.skip-link:focus { transform: none; }
+.shell { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+.header { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { font-size: 19px; font-weight: 700; letter-spacing: .08em; white-space: nowrap; }
+.nav { display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 20px; font-size: 14px; }
+.nav a { position: relative; display: block; padding: 8px 18px; border-radius: 12px; white-space: nowrap; transition: transform .2s ease-out; }
+.nav a:hover { background: var(--nav-hover); color: var(--accent); }
+.nav a:active { transform: scale(.97); }
+/* Layered edge highlights and backdrop blur approximate glass on the web.
+   Text sits on a high-opacity fill; the effect is limited to nav and about. */
+.glass {
+  position: relative;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(18px) saturate(115%);
+  backdrop-filter: blur(18px) saturate(115%);
+  box-shadow: inset 0 1px 0 var(--glass-light), inset 0 -1px 0 var(--glass-shade), 0 5px 18px var(--glass-shade);
+}
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid var(--glass-light);
+  border-bottom-color: transparent;
+  border-radius: 17px;
+  pointer-events: none;
+  opacity: .45;
+}
+.intro { padding: 42px 0 24px; }
+.intro p { margin: 0; color: var(--muted); font-size: 14px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.tile { border-radius: 20px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+.writing, .about-surface { grid-column: span 2; min-width: 0; }
+.welcome { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) 160px; align-items: center; gap: 48px; min-height: 300px; padding: 44px 64px; background: var(--soft); }
+.welcome h1 { font-size: clamp(42px, 5.5vw, 66px); letter-spacing: .04em; line-height: 1.2; margin: 0 0 20px; }
+.welcome p { color: var(--muted); font-size: 16px; max-width: 25em; margin: 0; }
+.caption { display: block; margin-top: 30px; font-size: 13px; color: var(--accent); font-weight: 600; }
+.cookie { display: block; width: 160px; height: 160px; object-fit: contain; image-rendering: pixelated; transition: transform .25s ease-out; }
+.writing, .about { padding: 30px 34px; min-height: 220px; }
+.tile h2 { font-size: 20px; margin: 0 0 14px; }
+.tile h3 { font-size: 16px; margin: 0 0 6px; }
+.writing p, .about p { margin: 0; color: var(--muted); font-size: 14px; max-width: 65ch; }
+.entry-label { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+.about-surface { position: relative; isolation: isolate; border-radius: 20px; background: var(--soft); }
+.cookie-behind-glass { position: absolute; right: 0; bottom: 0; width: 112px; height: 112px; object-fit: contain; image-rendering: pixelated; opacity: .45; }
+.about.glass { height: 100%; z-index: 1; background: var(--glass-fill); border-color: var(--glass-border); box-shadow: inset 0 1px 0 var(--glass-light), inset 0 -1px 0 var(--glass-shade), var(--shadow); }
+.about p { max-width: 25em; }
+.footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 42px; font-size: 13px; color: var(--muted); }
+.footer a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .welcome:hover .cookie { transform: translateY(-4px); }
+}
+@media (max-width: 767px) {
+  .shell { width: min(calc(100% - 32px), 560px); }
+  .header { height: 72px; gap: 12px; }
+  .nav { gap: 0; padding: 4px; }
+  .nav a { padding: 8px 12px; }
+  .intro { padding: 28px 0 20px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .writing, .about-surface { grid-column: auto; }
+  .welcome { grid-column: auto; grid-template-columns: minmax(0, 1fr); min-height: 0; padding: 30px 28px; gap: 24px; }
+  .cookie { width: 112px; height: 112px; justify-self: end; }
+  .caption { font-size: 12px; margin-top: 22px; }
+  .writing, .about { min-height: 0; padding: 26px; }
+  .about { min-height: 190px; }
+  .footer { padding: 30px 0; }
+}
+@media (max-width: 359px) {
+  .brand { font-size: 17px; }
+  .nav a { padding-inline: 10px; font-size: 13px; }
+  .welcome { padding-inline: 24px; }
+  .cookie { width: 96px; height: 96px; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .about.glass { background: var(--surface); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .about.glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .cookie-behind-glass { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cookie, .nav a { transition: none; }
+  .nav a:active { transform: none; }
+}
+@media (forced-colors: active) {
+  .glass, .about.glass { background: Canvas; border: 1px solid CanvasText; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass::after, .cookie-behind-glass { display: none; }
+}
